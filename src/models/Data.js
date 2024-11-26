@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import Sensor from "./Sensor.js";
 
 const DataSchema = new Schema({
   temperature: { type: Number, required: true },
@@ -8,6 +9,7 @@ const DataSchema = new Schema({
   counter: { type: Number, required: true },
   lat: { type: Number, required: false },
   long: { type: Number, required: false },
+  sensor_id: { type: mongoose.Schema.ObjectId, ref: "Sensor", required: true },
 });
 
 export default mongoose.model("Data", DataSchema);
