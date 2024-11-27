@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dataRouter from "./src/routes/DataRoutes.js";
 import { createConnection } from "./src/database/db.js";
+import sensorRoute from "./src/routes/SensorRoutes.js";
 
 (async () => {
   const app = express();
@@ -9,7 +10,9 @@ import { createConnection } from "./src/database/db.js";
 
   app.use(express.json());
   app.use(cors());
+
   app.use("/data", dataRouter);
+  app.use("/sensor", sensorRoute);
 
   console.log("Connecting to the database");
   await createConnection();

@@ -1,18 +1,16 @@
-import userService from "../services/UserService.js";
+import sensorService from "../services/SensorService.js";
 
-const create = async (req, res) => {
-  const { name, username, email, password, avatar } = req.body;
+const getByName = async (req, res) => {
+  const name = req.params.name;
 
-  if (!name || !username || !email || !password || !avatar) {
-    res.status(400).json({ error: "Data format is invalid!" });
+  if (!name) {
+    res.status(400).json({
+      error: "Name not found!",
+    });
   }
 
-  const user = await userService.create(req.body);
-
-  res.status(201).json({
-    msg: "User created successfully!",
-    user,
-  });
+  const sensor = await sensorService.getByName(name);
+  res.status(200).json({ sensor });
 };
 
-export default { create };
+export { getByName };

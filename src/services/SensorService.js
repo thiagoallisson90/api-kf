@@ -1,8 +1,9 @@
-import User from "../models/User.js";
+import Sensor from "../models/Sensor.js";
 
-const create = async (data) => {
-  const user = await User.create(data);
-  return user;
+const getByName = async (name) => {
+  return await Sensor.findOne({
+    device_name: name,
+  });
 };
 
-export default { create };
+export default { getByName };
