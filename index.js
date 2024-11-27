@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import userRouter from "./src/routes/UserRoutes.js";
+import dataRouter from "./src/routes/DataRoutes.js";
 import { createConnection } from "./src/database/db.js";
 
 (async () => {
@@ -9,7 +9,7 @@ import { createConnection } from "./src/database/db.js";
 
   app.use(express.json());
   app.use(cors());
-  app.use("/user", userRouter);
+  app.use("/data", dataRouter);
 
   console.log("Connecting to the database");
   await createConnection();
