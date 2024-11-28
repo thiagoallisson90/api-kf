@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
 
 const createConnection = async () => {
-  await mongoose.connect(
-    "mongodb+srv://thiagoallisson:HqlOhwFsjuDDZBbc@cluster0.egpjy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  );
+  config();
+
+  await mongoose.connect(process.env.DB_CONN);
 
   mongoose.connection.on("connected", () => {
     console.log("Connection established");
