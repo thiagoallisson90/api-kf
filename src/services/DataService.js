@@ -49,7 +49,6 @@ const getAllData = async () => {
 
 const getDataByDevice = async (device) => {
   const sensors = await Sensor.find({ device_name: device });
-  console.log(sensors);
 
   if (sensors.length === 0) {
     return null;
