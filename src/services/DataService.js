@@ -4,6 +4,7 @@ import Sensor from "../models/Sensor.js";
 
 const create = async (_data) => {
   const session = await mongoose.startSession();
+  const transaction = await session.startTransaction();
 
   let sensor = await Sensor.findOne({
     device_name: _data.device_name,
@@ -39,6 +40,7 @@ const create = async (_data) => {
     sensor: sensor._id,
   });
 
+  await session.commitTransaction();
   await session.endSession();
 };
 
