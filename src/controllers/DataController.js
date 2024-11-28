@@ -33,4 +33,19 @@ const create = async (req, res) => {
   });
 };
 
-export { create };
+const getAllData = async (req, res) => {
+  const allData = await dataService.getAllData();
+  res.status(200).json({
+    allData,
+  });
+};
+
+const getDataByDevice = async (req, res) => {
+  const device = req.params.device;
+  const data = await dataService.getDataByDevice(device);
+  res.status(200).json({
+    data,
+  });
+};
+
+export { create, getAllData, getDataByDevice };
