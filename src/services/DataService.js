@@ -4,7 +4,7 @@ import Sensor from "../models/Sensor.js";
 
 const create = async (_data) => {
   const session = await mongoose.startSession();
-  const transaction = await session.startTransaction();
+  await session.startTransaction();
 
   let sensor = await Sensor.findOne({
     device_name: _data.device_name,
