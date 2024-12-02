@@ -34,7 +34,7 @@ const create = async (req, res) => {
     });
   } catch (error) {
     console.error(req.body);
-    res.status(404).json(error);
+    res.status(400).json(req.body);
   }
 };
 
