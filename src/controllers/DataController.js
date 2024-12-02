@@ -33,7 +33,7 @@ const create = async (req, res) => {
       data,
     });
   } catch (error) {
-    console.error(error);
+    console.error(req.body);
     res.status(404).json(error);
   }
 };
