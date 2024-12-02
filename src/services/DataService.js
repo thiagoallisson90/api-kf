@@ -3,45 +3,52 @@ import Data from "../models/Data.js";
 import Sensor from "../models/Sensor.js";
 
 const create = async (_data) => {
-  const session = await mongoose.startSession();
-  await session.startTransaction();
+  let session;
+  try {
+    session = await mongoose.startSession();
+    session.startTransaction();
 
-  let sensor = await Sensor.findOne({
-    device_name: _data.device_name,
-  });
-  if (sensor) {
-    sensor.rec++;
-    sensor.sent = _data.sent;
-    sensor.pdr =
-      sensor.sent > 0 && sensor.rec <= sensor.sent
-        ? sensor.rec / sensor.sent
-        : 1.0;
-    sensor.lat = _data.lat;
-    sensor.long = _data.long;
-    sensor = await sensor.save();
-  } else {
-    sensor = await Sensor.create({
+    let sensor = await Sensor.findOne({
       device_name: _data.device_name,
-      sent: _data.sent,
-      lat: _data.lat,
-      long: _data.long,
-      rec: 1,
-      pdr: _data.sent > 0 ? 1 / _data.sent : 1,
     });
+    if (sensor) {
+      sensor.rec++;
+      sensor.sent = _data.sent;
+      sensor.pdr =
+        sensor.sent > 0 && sensor.rec <= sensor.sent
+          ? sensor.rec / sensor.sent
+          : 1.0;
+      sensor.lat = _data.lat;
+      sensor.long = _data.long;
+      sensor = await sensor.save();
+    } else {
+      sensor = await Sensor.create({
+        device_name: _data.device_name,
+        sent: _data.sent,
+        lat: _data.lat,
+        long: _data.long,
+        rec: 1,
+        pdr: _data.sent > 0 ? 1 / _data.sent : 1,
+      });
+    }
+
+    await Data.create({
+      device_name: _data.device_name,
+      temperature: _data.temperature,
+      humidity: _data.humidity,
+      luminosity: _data.luminosity,
+      rssi: _data.rssi,
+      sent: _data.sent,
+      sensor: sensor._id,
+    });
+
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error) {
+    await session.abortTransaction();
+    console.error(error);
+    throw new Error("Fail to insert data!");
   }
-
-  await Data.create({
-    device_name: _data.device_name,
-    temperature: _data.temperature,
-    humidity: _data.humidity,
-    luminosity: _data.luminosity,
-    rssi: _data.rssi,
-    sent: _data.sent,
-    sensor: sensor._id,
-  });
-
-  await session.commitTransaction();
-  await session.endSession();
 };
 
 const getAllData = async () => {
