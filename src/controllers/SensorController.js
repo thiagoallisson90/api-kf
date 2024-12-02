@@ -13,4 +13,9 @@ const getByName = async (req, res) => {
   res.status(200).json({ sensor });
 };
 
-export { getByName };
+const getAll = async (req, res) => {
+  const sensors = await sensorService.getAll();
+  res.status(200).json({ sensors });
+};
+
+export { getByName, getAll };

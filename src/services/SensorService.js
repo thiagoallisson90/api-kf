@@ -6,4 +6,8 @@ const getByName = async (name) => {
   });
 };
 
-export default { getByName };
+const getAll = async () => {
+  return await Sensor.find();
+};
+
+export default { getByName, getAll };

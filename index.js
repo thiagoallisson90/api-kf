@@ -11,6 +11,11 @@ import sensorRoute from "./src/routes/SensorRoutes.js";
   app.use(express.json());
   app.use(cors());
 
+  app.get("/", (req, res) => {
+    res.status(200).json({
+      ok: true,
+    });
+  });
   app.use("/data", dataRouter);
   app.use("/sensor", sensorRoute);
 

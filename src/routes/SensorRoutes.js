@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getByName } from "../controllers/SensorController.js";
+import { getAll, getByName } from "../controllers/SensorController.js";
 
 const router = Router();
 
 router.get("/:name", getByName);
+router.get("/", getAll);
 
 export default router;
