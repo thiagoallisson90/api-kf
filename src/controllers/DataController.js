@@ -28,19 +28,19 @@ const create = async (req, res) => {
 
     const data = await dataService.create(req.body);
 
-    res.status(201).json({
+    return res.status(201).json({
       msg: "Sensored data inserted successfully!",
       data,
     });
   } catch (error) {
     console.error(req.body);
-    res.status(400).json(req.body);
+    return res.status(400).json(req.body);
   }
 };
 
 const getAllData = async (req, res) => {
   const allData = await dataService.getAllData();
-  res.status(200).json({
+  return res.status(200).json({
     allData,
   });
 };
@@ -48,7 +48,7 @@ const getAllData = async (req, res) => {
 const getDataByDevice = async (req, res) => {
   const device = req.params.device;
   const data = await dataService.getDataByDevice(device);
-  res.status(200).json({
+  return res.status(200).json({
     data,
   });
 };
