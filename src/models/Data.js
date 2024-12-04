@@ -16,6 +16,6 @@ const DataSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-DataSchema.plugin(AutoIncrement);
+DataSchema.plugin(AutoIncrement, { inc_field: "autoIncrementID" });
 
 export default mongoose.model("Data", DataSchema);
