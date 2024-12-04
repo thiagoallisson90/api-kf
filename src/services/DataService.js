@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Data from "../models/Data.js";
 import Sensor from "../models/Sensor.js";
-import { randomUUID } from "node:crypto";
 
 function addSent(sensor, newSent) {
   let sent = sensor.sent;
@@ -21,11 +20,10 @@ const create = async (_data) => {
       device_name: _data.device_name,
     });
 
-    let device_name = _data.device_name;
-
-    if (sensor && sensor.sent < _data.sent) {
+    if (sensor) {
       sensor.rec++;
-      sensor.sent = _data.sent;
+      sensor.sent =
+        _data.sent > sensor.sent ? _data.sent : sensor.sent + _data.sent; // Atualiza sensor.sent corretamente
       sensor.pdr =
         sensor.sent > 0 && sensor.rec <= sensor.sent
           ? sensor.rec / sensor.sent
@@ -34,9 +32,8 @@ const create = async (_data) => {
       sensor.long = _data.long;
       sensor = await sensor.save();
     } else {
-      device_name = sensor ? randomUUID().toString() : _data.device_name;
       sensor = await Sensor.create({
-        device_name,
+        device_name: _data.device_name,
         sent: _data.sent,
         lat: _data.lat,
         long: _data.long,
@@ -46,7 +43,7 @@ const create = async (_data) => {
     }
 
     await Data.create({
-      device_name,
+      device_name: _data.device_name,
       temperature: _data.temperature,
       humidity: _data.humidity,
       luminosity: _data.luminosity,
