@@ -13,7 +13,7 @@ import sensorRoute from "./src/routes/SensorRoutes.js";
 
   app.use((err, req, res, next) => {
     if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-      res.body.error({ error: "Invalid JSON" });
+      res.body.error = "Invalid JSON";
     }
     next();
   });
