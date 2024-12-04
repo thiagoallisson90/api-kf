@@ -42,11 +42,11 @@ const errorSensor = async (req, res) => {
 
     await session.commitTransaction();
 
-    return res.send(400).json({
+    return res.status(400).json({
       error: req.body.error,
     });
   } catch (error) {
-    return res.send(400).json({
+    return res.status(400).json({
       error: req.body.error,
     });
   }
