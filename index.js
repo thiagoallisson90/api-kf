@@ -11,6 +11,13 @@ import sensorRoute from "./src/routes/SensorRoutes.js";
   app.use(express.json());
   app.use(cors());
 
+  app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+      return res.status(400).json({ error: "JSON inválido" });
+    }
+    next();
+  });
+
   app.get("/", (req, res) => {
     res.status(200).json({
       ok: true,
