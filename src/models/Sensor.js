@@ -13,6 +13,6 @@ const SensorSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-SensorSchema.plugin(AutoIncrement, { inc_field: "_id" });
+SensorSchema.plugin(AutoIncrement, { inc_field: "id" });
 
 export default mongoose.model("Sensor", SensorSchema);
