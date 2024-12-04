@@ -1,7 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import AutoIncrementFactory from "mongoose-sequence";
-
-const AutoIncrement = AutoIncrementFactory(mongoose);
 
 const SensorSchema = new Schema({
   device_name: { type: String, required: true },
@@ -12,7 +9,5 @@ const SensorSchema = new Schema({
   long: { type: Number, required: false },
   createdAt: { type: Date, default: Date.now },
 });
-
-SensorSchema.plugin(AutoIncrement, { inc_field: "autoIncrementID" });
 
 export default mongoose.model("Sensor", SensorSchema);

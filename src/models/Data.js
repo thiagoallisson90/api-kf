@@ -1,7 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import AutoIncrementFactory from "mongoose-sequence";
-
-const AutoIncrement = AutoIncrementFactory(mongoose);
 
 const DataSchema = new Schema({
   temperature: { type: Number, required: true },
@@ -15,7 +12,5 @@ const DataSchema = new Schema({
   },
   createdAt: { type: Date, default: Date.now },
 });
-
-DataSchema.plugin(AutoIncrement, { inc_field: "autoIncrementID" });
 
 export default mongoose.model("Data", DataSchema);
