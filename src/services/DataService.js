@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 import Data from "../models/Data.js";
 import Sensor from "../models/Sensor.js";
 
+function addSent(sensor, newSent) {
+  let sent = sensor.sent;
+  if (sensor.sent > newSent) {
+    sent += newSent;
+  }
+  return sent;
+}
+
 const create = async (_data) => {
   let session;
   try {
@@ -13,7 +21,7 @@ const create = async (_data) => {
     });
     if (sensor) {
       sensor.rec++;
-      sensor.sent = _data.sent;
+      sensor.sent = addSent(sensor, _data.sent); /*_data.sent*/
       sensor.pdr =
         sensor.sent > 0 && sensor.rec <= sensor.sent
           ? sensor.rec / sensor.sent
