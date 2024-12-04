@@ -20,7 +20,7 @@ const create = async (_data) => {
       device_name: _data.device_name,
     });
 
-    if (sensor) {
+    if (sensor && _data.sent > sensor.sent) {
       sensor.rec++;
       sensor.sent =
         _data.sent > sensor.sent ? _data.sent : sensor.sent + _data.sent; // Atualiza sensor.sent corretamente
