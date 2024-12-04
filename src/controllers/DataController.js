@@ -1,7 +1,18 @@
 import dataService from "../services/DataService.js";
+import sensorService from "../services/SensorService.js";
 
 const create = async (req, res) => {
   try {
+    if (req.body.error) {
+      if (req.body.error == "Invalid JSON") {
+        return sensorService.errorSensor(req, res);
+      }
+
+      return res.status(400).json({
+        error: req.body.error,
+      });
+    }
+
     const device_name = req.body.device_name || undefined;
     const temperature = !isNaN(req.body.temperature)
       ? parseFloat(req.body.temperature)
@@ -13,7 +24,7 @@ const create = async (req, res) => {
       ? parseFloat(req.body.luminosity)
       : undefined;
     const rssi = !isNaN(req.body.rssi) ? parseFloat(req.body.rssi) : undefined;
-    const sent = !isNaN(req.body.sent) ? parseFloat(req.body.sent) : undefined;
+    const sent = !isNaN(req.body.sent) ? parseInt(req.body.sent) : undefined;
     const lat = !isNaN(req.body.lat) ? parseFloat(req.body.lat) : undefined;
     const long = !isNaN(req.body.long) ? parseFloat(req.body.long) : undefined;
 
@@ -43,6 +54,12 @@ const create = async (req, res) => {
 };
 
 const getAllData = async (req, res) => {
+  if (req.body.error) {
+    return res.status(400).json({
+      error: req.body.error,
+    });
+  }
+
   const allData = await dataService.getAllData();
   return res.status(200).json({
     allData,
@@ -50,6 +67,12 @@ const getAllData = async (req, res) => {
 };
 
 const getDataByDevice = async (req, res) => {
+  if (req.body.error) {
+    return res.status(400).json({
+      error: req.body.error,
+    });
+  }
+
   const device = req.params.device;
   const data = await dataService.getDataByDevice(device);
   return res.status(200).json({

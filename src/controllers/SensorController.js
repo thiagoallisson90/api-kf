@@ -1,6 +1,11 @@
 import sensorService from "../services/SensorService.js";
 
 const getByName = async (req, res) => {
+  if (req.body.error) {
+    return res.status(400).json({
+      error: req.body.error,
+    });
+  }
   const name = req.params.name;
 
   if (!name) {
@@ -14,6 +19,12 @@ const getByName = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
+  if (req.body.error) {
+    return res.status(400).json({
+      error: req.body.error,
+    });
+  }
+
   const sensors = await sensorService.getAll();
   return res.status(200).json({ sensors });
 };
