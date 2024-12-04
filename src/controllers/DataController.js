@@ -27,7 +27,7 @@ const create = async (req, res) => {
       lat == undefined ||
       long == undefined
     ) {
-      res.status(400).json({ error: "Data format is invalid!" });
+      return res.status(400).json({ error: "Data format is invalid!" });
     }
 
     const data = await dataService.create(req.body);

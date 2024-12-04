@@ -10,7 +10,7 @@ const getByName = async (req, res) => {
   }
 
   const sensor = await sensorService.getByName(name);
-  res.status(200).json({ sensor });
+  return res.status(200).json({ sensor });
 };
 
 const getAll = async (req, res) => {
