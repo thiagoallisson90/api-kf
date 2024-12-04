@@ -22,7 +22,8 @@ const create = async (_data) => {
 
     if (sensor) {
       sensor.rec++;
-      sensor.sent = addSent(sensor, _data.sent); // Atualiza sensor.sent corretamente
+      sensor.sent =
+        _data.sent > sensor.sent ? _data.sent : sensor.sent + _data.sent; // Atualiza sensor.sent corretamente
       sensor.pdr =
         sensor.sent > 0 && sensor.rec <= sensor.sent
           ? sensor.rec / sensor.sent
