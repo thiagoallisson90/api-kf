@@ -14,9 +14,7 @@ const errorSensor = async (req, res) => {
   try {
     const { device_name } = req.body;
     if (!device_name) {
-      return res.status(400).json({
-        error: req.body.error,
-      });
+      return;
     }
 
     const session = await Sensor.startSession();
@@ -41,15 +39,7 @@ const errorSensor = async (req, res) => {
     });
 
     await session.commitTransaction();
-
-    return res.status(400).json({
-      error: req.body.error,
-    });
-  } catch (error) {
-    return res.status(400).json({
-      error: req.body.error,
-    });
-  }
+  } catch (error) {}
 };
 
 export default { getByName, getAll, errorSensor };

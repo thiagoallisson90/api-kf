@@ -5,12 +5,11 @@ const create = async (req, res) => {
   try {
     if (req.body.error) {
       if (req.body.error == "Invalid JSON") {
-        return sensorService.errorSensor(req, res);
+        sensorService.errorSensor(req, res);
+        return res.status(400).json({
+          error: req.body.error,
+        });
       }
-
-      return res.status(400).json({
-        error: req.body.error,
-      });
     }
 
     const device_name = req.body.device_name || undefined;
