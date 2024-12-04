@@ -14,7 +14,7 @@ const errorSensor = async (req, res) => {
   try {
     const { device_name } = req.body;
     if (!device_name) {
-      return res.send(400).json({
+      return res.status(400).json({
         error: req.body.error,
       });
     }
