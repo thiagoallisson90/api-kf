@@ -4,8 +4,9 @@ import Sensor from "../models/Sensor.js";
 
 function addSent(sensor, newSent) {
   let sent = sensor.sent;
-  if (sensor.sent > newSent) {
+  if (sent > newSent) {
     sent += newSent;
+    console.log(sent);
   }
   return sent;
 }
