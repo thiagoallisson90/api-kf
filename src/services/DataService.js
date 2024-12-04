@@ -4,9 +4,8 @@ import Sensor from "../models/Sensor.js";
 
 function addSent(sensor, newSent) {
   let sent = sensor.sent;
-  if (sent > newSent) {
-    sent += newSent;
-    console.log(sent);
+  if (newSent < sent) {
+    sent += newSent; // Soma somente se newSent for menor que o valor atual de sent
   }
   return sent;
 }
@@ -20,9 +19,10 @@ const create = async (_data) => {
     let sensor = await Sensor.findOne({
       device_name: _data.device_name,
     });
+
     if (sensor) {
       sensor.rec++;
-      sensor.sent = addSent(sensor, _data.sent); /*_data.sent*/
+      sensor.sent = addSent(sensor, _data.sent); // Atualiza sensor.sent corretamente
       sensor.pdr =
         sensor.sent > 0 && sensor.rec <= sensor.sent
           ? sensor.rec / sensor.sent
