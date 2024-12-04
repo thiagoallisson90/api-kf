@@ -23,7 +23,7 @@ const create = async (_data) => {
 
     let device_name = _data.device_name;
 
-    if (sensor && sensor.sent > _data.sent) {
+    if (sensor && sensor.sent < _data.sent) {
       sensor.rec++;
       sensor.sent = _data.sent;
       sensor.pdr =
